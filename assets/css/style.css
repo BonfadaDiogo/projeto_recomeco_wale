@@ -1,0 +1,59 @@
+/* Seletor de tag */
+body {
+    background-color: #828282;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Seletor de id (#) */
+#login {
+    background-color: #ac9d4b;
+    width: 450px;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* Seletor de class (.) */
+.login {
+    width: 100%;
+    font-size: 16pt;
+    padding: 10px;
+    background-color:black;
+    color: #ac9d4b;
+    border-radius: 12px;
+    border: none;
+}
+
+/* Seletor de propriedade */
+input[type="submit"], input[type="reset" ] {
+    width: 40%;
+    font-size: 14pt;
+    padding: 10px;
+    cursor: pointer;
+    color: #ac9d4b;
+    border-radius: 0px;
+    transition: 0.3s;
+}
+
+/* Usando eventos CSS */
+input[type="submit"]:hover, input[type="reset"]:hover  {
+    width: 35%;
+    font-size: 16pt;
+    padding: 10px;
+    background-color:black;
+    color: #ac9d4b;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+#login-fields {
+    text-align: left;
+    margin: 0px 30px 0px 30px;
+    
+}
+
