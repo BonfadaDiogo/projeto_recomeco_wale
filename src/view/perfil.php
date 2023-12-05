@@ -1,4 +1,7 @@
 <?php
+$a = explode("\\", __DIR__);
+$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
+
 //Importação do cabeçalho
 include "/xampp/htdocs/projeto_recomeco_wale/src/controller/header.php";
 
@@ -63,7 +66,7 @@ $u = $_SESSION["user"];
 </style>
 
 <!-- construindo perfil -->
-<form action="#" method="get">
+<form action="<?= ROOT ?>/src/controller/update_perfil.php" method="post" enctype="multipart/form-data">
     <!-- Tabela para organizar o conteúdo -->
     <table>
         <!-- <tr> representa uma linha da tabela -->
@@ -248,10 +251,10 @@ $u = $_SESSION["user"];
         <tr>
             <td colspan=5>
                 <br>
-                <a href="<?= ROOT ?>"><button>Salvar</button> </a>
-                <a href="<?= ROOT ?>"><button>Limpar</button> </a>
-                <a href="<?= ROOT ?>"><button>Próxima Página</button> </a>
-                <br><br>
+                <input type="submit" value="Salvar" name="submit">
+                <input type="reset" value="Limpar">
+                
+            
             </td>
         </tr>
     </table> 

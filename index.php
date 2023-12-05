@@ -1,10 +1,12 @@
 <?php
+$a = explode("\\", __DIR__);
+$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
+
 //Importação de arquivos
-include "./const.php";
+include $dir."/src/controller/header.php";
 include "./src/model/user.php";
 include MODEL."/database.php";
 
-session_start();
 
 if( isset($_POST["user"]) &&
     isset($_POST["pass"]) ) {
@@ -15,10 +17,19 @@ if( isset($_POST["user"]) &&
         );
         //Fazendo uso do método de verificação de login
         if( $user->login() ) {
+            if($user->getPerfil()==1){
+             echo "<script> alert('BEM VINDO ADM! ✅') </script>";
+             $_SESSION["adm"] = $user->getObject();
+             header("Refresh: 0; URL= /projeto_recomeco_wale/src/view/adm.php");
+
+            }else{
+
+                
             //var_dump($user->login());
             echo "<script> alert('AUTENTICADO! ✅') </script>";
             $_SESSION["user"] = $user->getObject();
             header("Refresh: 0; URL= /projeto_recomeco_wale/src/view/perfil.php");
+            }
         } else {
             echo "<script> alert('ACESSO NEGADO! ❌') </script>";
             var_dump($user->login());
@@ -26,19 +37,6 @@ if( isset($_POST["user"]) &&
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?= DESCRIPTION ?>">
-    <meta name="keywords" content="<?= KEYWORDS ?>">
-    <meta name="author" content="<?= AUTHOR?>">
-    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <title><?= TITLE ?></title>
-</head>
-<body>
     <div id="login">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

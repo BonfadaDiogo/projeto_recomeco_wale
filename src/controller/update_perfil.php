@@ -20,161 +20,159 @@ session_reset();
 $u = $_SESSION["user"];
 //var_dump( $u );
 
-//Recebendo os dados do formulário
-if( isset($_GET["photo"]) ) {
-    $photo = $_GET["photo"];
+//Analisar se realmente é um arquivo de imagem ()
+if($_FILES["photo"]["name"] != "") {
+    //Recebimento da foto de perfil (arquivo)
+    $target_dir = $dir."/assets/img/profile/";
+    $file_name = basename($_FILES["photo"]["name"]);
+    $target_file = $target_dir . $file_name;
+    $target_database = ROOT."/assets/img/profile/".$file_name;
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+    $check = getimagesize($_FILES["photo"]["tmp_name"]);
+    if($check !== false) {
+        echo "Arquivo enviado é uma imagem - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        echo "Arquivo enviado NÃO É uma imagem.";
+        $uploadOk = 0;
+    }
+
+    //Verifica se o arquivo já existe
+    if (file_exists($target_file)) {
+        echo "Desculpe, o arquivo já existe.";
+        $uploadOk = 0;
+    }
+
+    //Verifica tamanho do arquivo
+    if ($_FILES["photo"]["size"] > 2100000) {
+        echo "Arquivo muito grande! (Limite 2MB).";
+        $uploadOk = 0;
+    }
+
+    // Permitir apenas alguns formatos
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    && $imageFileType != "gif" ) {
+    echo "Desculpe, somente aceitamos arquivos JPG, JPEG, PNG & GIF.";
+    $uploadOk = 0;
+    } 
+
+    //Se cair em algum daqueles filtros, não realiza upload
+    if ($uploadOk == 0) {
+        echo "Desculpe, seu arquivo não foi salvo.";
+    //Senão, realiza.
+    } else {
+        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
+            echo "O arquivo ". htmlspecialchars( basename( $_FILES["photo"]["name"])). " foi salvo com sucesso!";
+        } else {
+            echo "Desculpe, houve algum erro no download. Tente novamente mais tarde.";
+        }
+    }
 } else {
-    $photo = null;
+    $target_database = null;
 }
 
-if( isset($_GET["user"]) ) {
-    $user = $_GET["user"];
-} else {
-    $user = null;
+////////////////////////////////////////////////////////////////////
+//Iniciando a query SQL
+$query = "UPDATE users SET ";
+
+//Recebendo os demais dados do formulário
+//e compondo a query
+if( !empty($_POST["user"]) ) {
+    $query .= "user_name='{$_POST['user']}'";
+} 
+
+if( !empty($_POST["birth"]) ) {
+    $query .= ",user_birth='{$_POST['birth']}'";
+} 
+
+if( !empty($_POST["first-name"]) ) {
+    $query .= ",user_first_name='{$_POST["first-name"]}'";
+} 
+
+if( !empty($_POST["last-name"]) ) {
+    $query .= ",user_last_name='{$_POST["last-name"]}'";
 }
 
-if( isset($_GET["numberCnh"]) ) {
-    $numberCnh = $_GET["numberCnh"];
-} else {
-    $numberCnh = null;
+if( !empty($_POST["desc"]) ) {
+    $query .= ",user_desc='{$_POST["desc"]}'";
 }
 
-
-if( isset($_GET["birth"]) ) {
-    $birth = $_GET["birth"];
-} else {
-    $birth = null;
+if( !empty($_POST["cep"]) ) {
+    $query .= ",user_cep='{$_POST["desc"]}'";
 }
 
-if( isset($_GET["first-name"]) ) {
-    $firstName = $_GET["first-name"];
-} else {
-    $firstName = null;
+if( !empty($_POST["address"]) ) {
+    $query .= ",user_address='{$_POST["address"]}'";
 }
 
-if( isset($_GET["last-name"]) ) {
-    $lastName = $_GET["last-name"];
-} else {
-    $lastName = null;
+if( !empty($_POST["number"]) ) {
+    $query .= ",user_number='{$_POST["number"]}'";
 }
 
-if( isset($_GET["desc"]) ) {
-    $desc = $_GET["desc"];
-} else {
-    $desc = null;
+if( !empty($_POST["complement"]) ) {
+    $query .= ",user_complement='{$_POST["complement"]}'";
 }
 
-if( isset($_GET["cep"]) ) {
-    $cep = $_GET["cep"];
-} else {
-    $cep = null;
+if( !empty($_POST["neighborhood"]) ) {
+    $query .= ",user_neighborhood='{$_POST["neighborhood"]}'";
 }
 
-if( isset($_GET["address"]) ) {
-    $address = $_GET["address"];
-} else {
-    $address = null;
+if( !empty($_POST["city"]) ) {
+    $query .= ",user_city='{$_POST["city"]}'";
 }
 
-if( isset($_GET["number"]) ) {
-    $number = $_GET["number"];
-} else {
-    $number = null;
+if( !empty($_POST["state"]) ) {
+    $query .= ",user_state='{$_POST["state"]}'";
 }
 
-if( isset($_GET["complement"]) ) {
-    $complement = $_GET["complement"];
-} else {
-    $complement = null;
+if( !empty($_POST["sex"]) ) {
+    $query .= ",user_sex='{$_POST["sex"]}'";
 }
 
-if( isset($_GET["neighborhood"]) ) {
-    $neighborhood = $_GET["neighborhood"];
-} else {
-    $neighborhood = null;
+if( !empty($_POST["phone"]) ) {
+    $query .= ",user_phone='{$_POST["phone"]}'";
 }
 
-if( isset($_GET["city"]) ) {
-    $city = $_GET["city"];
-} else {
-    $city = null;
+if( !empty($_POST["email"]) ) {
+    $query .= ",user_email='{$_POST["email"]}'";
 }
 
-if( isset($_GET["state"]) ) {
-    $state = $_GET["state"];
-} else {
-    $state = null;
+if( !empty($_POST["notify"]) ) {
+    $query .= ",user_notify='{$_POST["notify"]}'";
 }
 
-if( isset($_GET["sex"]) ) {
-    $sex = $_GET["sex"];
-} else {
-    $sex = null;
+if( !empty($_POST["new-pass"]) ) {
+    $query .= ",user_new_pass='{$_POST["sex"]}'";
 }
 
-if( isset($_GET["phone"]) ) {
-    $phone = $_GET["phone"];
-} else {
-    $phone = null;
+if( $_FILES["photo"]["name"] != "" ) {
+    $query .= ",user_photo='$target_database'";
 }
 
-if( isset($_GET["email"]) ) {
-    $email = $_GET["email"];
-} else {
-    $email = null;
-}
-
-if( isset($_GET["notify"]) ) {
-    $notify = 1;
-} else {
-    $notify = 0;
-}
-
-if( isset($_GET["new-pass"]) ) {
-    $newPass = $_GET["new-pass"];
-} else {
-    $newPass = null;
-}
-   
     //Pegando o cod do usuário
     $cod = $u->getCod();
+
+    //Opções adicionais da query
+    $opt = " WHERE user_cod = '$cod'";
+    //var_dump($query . $opt);
 
     //Instanciando a classe Database
     $db = new Database();
 
     //Fazendo uso do método update da classe
-    $db->update(
-        "UPDATE users SET
-        user_name           ='$user',
-        user_photo          ='$photo',
-        user_birth          ='$birth',
-        user_first_name     ='$firstName',
-        user_last_name      ='$lastName',
-        user_desc           ='$desc',
-        user_cep            ='$cep',
-        user_address        ='$address',
-        user_number         ='$number',
-        user_complement     ='$complement',
-        user_neighborhood   ='$neighborhood',
-        user_city           ='$city',
-        user_state          ='$state',
-        user_sex            ='$sex',
-        user_phone          ='$phone',
-        user_email          ='$email',
-        user_notify         = $notify,
-        user_new_pass       ='$newPass'
-        WHERE user_cod      = $cod"
-    );
+    $db->update($query . $opt);
 
     echo "<p>Atualizando dados...</p>";
 
     //Atualizando dados na sessão
     $_SESSION["user"]->updateObject($cod);
 
-    //Redirecionando para a página de perfil
-   // header("Refresh: 2; url=".ROOT);
-
     //var_dump( $_SESSION["user"] );
+
+    //Redirecionando para a página de perfil
+    header("Refresh: 2; url=".ROOT);
 
 //Importando o rodapé
 include $dir."/src/controller/footer.php";

@@ -1,4 +1,7 @@
 <?php
+$a = explode("\\", __DIR__);
+$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
+
 
 //namespace src\classes;
 

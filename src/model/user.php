@@ -1,4 +1,7 @@
 <?php
+$a = explode("\\", __DIR__);
+$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
+
 
 class User {
     //Atributos
@@ -25,6 +28,7 @@ class User {
     private $notify;
     private $actualPas;
     private $newPass;
+    private $perfil;
 
 
 
@@ -78,6 +82,9 @@ class User {
                     $this->newPass = $u->user_new_pass;
                     $this->status = $u->user_status;
                     $this->numberCnh = $u->user_numberCnh;
+                    $this->perfil = $u->user_profile;
+
+
                 }
             }
         }
@@ -505,6 +512,24 @@ class User {
     public function setNewPass($newPass): self
     {
         $this->newPass = $newPass;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of perfil
+     */
+    public function getPerfil()
+    {
+        return $this->perfil;
+    }
+
+    /**
+     * Set the value of perfil
+     */
+    public function setPerfil($perfil): self
+    {
+        $this->perfil = $perfil;
 
         return $this;
     }
