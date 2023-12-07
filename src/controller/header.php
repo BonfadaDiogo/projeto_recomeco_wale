@@ -1,7 +1,11 @@
 <?php
-//Importação de arquivos
-include "/xampp/htdocs/projeto_recomeco_wale/const.php";
+$a = explode("\\", __DIR__);
+$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
 
+//Importando as constantes
+include $dir."/const.php";
+
+//Inicializando sessão
 session_start();
 ?>
 

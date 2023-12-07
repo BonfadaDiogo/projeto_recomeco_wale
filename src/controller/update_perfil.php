@@ -100,7 +100,7 @@ if( !empty($_POST["desc"]) ) {
 }
 
 if( !empty($_POST["cep"]) ) {
-    $query .= ",user_cep='{$_POST["desc"]}'";
+    $query .= ",user_cep='{$_POST["cep"]}'";
 }
 
 if( !empty($_POST["address"]) ) {

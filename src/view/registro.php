@@ -1,7 +1,4 @@
 <?php
-$a = explode("\\", __DIR__);
-$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
-
 //Importação do cabeçalho
 include "/xampp/htdocs/projeto_recomeco_wale/src/controller/header.php";
 
@@ -34,8 +31,6 @@ if( isset($_POST["pass"]) ) {
     $pass = null;
 }
 
-var_dump($email);
-
 if($count == 2) {
    //instanciar classe Database
    $db = new Database();
@@ -45,10 +40,10 @@ if($count == 2) {
 
    //salvando no BD
    $db->insert(
-    "INSERT INTO users(user_name, user_pass, user_email)
-    VALUES('$user' , '$passCripto', '$email')"
-   );
+    "INSERT INTO users(user_name, user_pass)
+    VALUES('$user' , '$passCripto')"
 
+   );
     //Mensagem de sucesso
     echo "<script> alert('Cadastro realizado! ✅') </script>";
 
@@ -65,7 +60,7 @@ if($count == 2) {
             <div id="login-fields">
                 <input type="text" name="user" id="user" class="login" placeholder="Nome de usuario *" required>
                 <br><br>
-                <input type="email" name="email" id="email" class="login" placeholder="Email">
+                <input type="email" name="email *" id="email" class="login" placeholder=" Email">
                 <br><br>
                 <input type="password" onmouseover="showPass(this)" onmouseleave="hidePass(this)" name="pass" id="pass" class="login" placeholder="Senha *" required>
                 <br><br>

@@ -1,6 +1,8 @@
 <?php
+$a = explode("\\", __DIR__);
+$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
 
-include "/xampp/htdocs/projeto_recomeco_wale/src/controller/header.php";
+include $dir."/src/controller/header.php";
 
 session_destroy();
 
@@ -8,4 +10,4 @@ echo "<p>Finalizando sessão...</p>";
 
 header("Refresh: 2; url = ".ROOT);
 
-include "/xampp/htdocs/projeto_recomeco_wale/src/controller/footer.php";
+include $dir."/src/controller/footer.php";

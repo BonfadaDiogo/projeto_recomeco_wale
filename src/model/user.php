@@ -1,14 +1,11 @@
 <?php
-$a = explode("\\", __DIR__);
-$dir = "/{$a[1]}/{$a[2]}/{$a[3]}";
-
 
 class User {
     //Atributos
     private $cod;
     private $status;
     private $user;
-    private$numberCnh; //fazer get revisar os gets e os private 
+    private $numberCnh; //fazer get revisar os gets e os private 
     private $pass;
     private $photo;
     private $birth;
@@ -28,7 +25,7 @@ class User {
     private $notify;
     private $actualPas;
     private $newPass;
-    private $perfil;
+    private $profile;
 
 
 
@@ -81,18 +78,15 @@ class User {
                     $this->notify = $u->user_notify;
                     $this->newPass = $u->user_new_pass;
                     $this->status = $u->user_status;
-                    $this->numberCnh = $u->user_numberCnh;
-                    $this->perfil = $u->user_profile;
-
-
+                    $this->numberCnh = $u->user_cnh;
+                    $this->profile = $u->user_profile;
                 }
             }
         }
         return $check;
     }
-
     //Função para retornar o objeto inteiro
-    public function getObject () {
+    public function getObject() {
         return $this;
     }
 
@@ -130,20 +124,10 @@ class User {
         $this->notify           = $u[0]->user_notify;
         $this->newPass          = $u[0]->user_new_pass;
         $this->status           = $u[0]->user_status;
-        $this->numberCnh        =$u[0]->user_numberCnh;
+        $this->numberCnh       = $u[0]->user_cnh;
 
         //Agora, retornamos o objeto atualizado
         return $this;
-    }
-
-
-    public function getCod(){
-        return $this->cod;
-    }
-
-    
-    public function getStatus() {
-        return $this->status;
     }
 
 
@@ -153,11 +137,6 @@ class User {
     public function getUser()
     {
         return $this->user;
-    }
-
-    public function getNumberCnh()
-    {
-        return $this->numberCnh;
     }
 
 
@@ -517,19 +496,55 @@ class User {
     }
 
     /**
-     * Get the value of perfil
+     * Get the value of profile
      */
-    public function getPerfil()
+    public function getProfile()
     {
-        return $this->perfil;
+        return $this->profile;
     }
 
     /**
-     * Set the value of perfil
+     * Set the value of profile
      */
-    public function setPerfil($perfil): self
+    public function setProfile($profile): self
     {
-        $this->perfil = $perfil;
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of numberCnh
+     */
+    public function getNumberCnh()
+    {
+        return $this->numberCnh;
+    }
+
+    /**
+     * Set the value of numberCnh
+     */
+    public function setNumberCnh($numberCnh): self
+    {
+        $this->numberCnh = $numberCnh;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     */
+    public function setStatus($status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
